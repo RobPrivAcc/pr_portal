@@ -1,0 +1,46 @@
+{% extends "index.html" %}
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+    {% block site_title %}
+        {{ title }}
+    {% endblock site_title %}
+    {% block shop_section %}
+        <div class="btn-toolbar mb-2 mb-md-0">
+
+                  <div class="input-group me-2">
+
+                    <select id = "shop" class="form-select form-select-outline-secondary">
+                      <option selected>Shop</option>
+                        {% for shop in shops %}
+                            <option value="{{ shop[0] }}"> {{ shop[1]|title }} </option>
+                        {% endfor %}
+                    </select>
+
+                    <select id = "months" class="form-select form-select-outline-secondary">
+                      <option selected>month</option>
+                        {% for month in months %}
+                            <option value="{{ month[0] }}">{{ month[1] }} </option>
+                        {% endfor %}
+                    </select>
+
+                    <select id = "years" class="form-select form-select-outline-secondary">
+                        <option selected>years</option>
+                        {% for year in years %}
+                            <option value="{{ year }}">{{ year }} </option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">
+                    Search
+                  </button>
+        </div>
+
+    {% endblock shop_section %}
+
+{% block main_content %}
+
+{{ payload|safe }}
+{% endblock %}

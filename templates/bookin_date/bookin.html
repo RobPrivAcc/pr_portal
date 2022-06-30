@@ -1,0 +1,51 @@
+{% extends "index.html" %}
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+    {% block site_title %}
+        {{ title }}
+    {% endblock site_title %}
+
+    {% block shop_section %}
+
+        <form action = "/bookin/report" method = "post">
+            <div class="btn-toolbar mb-2 mb-md-0">
+                  <div class="input-group me-2">
+
+                        <select id = "shop" name = "shop" class="form-select form-select-outline-secondary">
+                          <option selected>Shop</option>
+                            {% for shop in shops %}
+                                <option value="{{ shop[0] }}"> {{ shop[1]|title }} </option>
+                            {% endfor %}
+                        </select>
+
+                        <select id = "months" name = "months" class="form-select form-select-outline-secondary">
+                          <option selected>month</option>
+                            {% for month in date.get_months() %}
+                                <option value="{{ month[0] }}">{{ month[1] }} </option>
+                            {% endfor %}
+                        </select>
+
+                        <select id = "years" name = "years" class="form-select form-select-outline-secondary">
+                            <option selected>years</option>
+                            {% for year in date.get_years() %}
+                                <option value="{{ year }}">{{ year }} </option>
+                            {% endfor %}
+                        </select>
+                  </div>
+                  <button type="submit" id="btn_book_in_raport" class="btn btn-sm btn-outline-secondary">
+                    Search
+                  </button>
+            </div>
+        </form>
+
+    {% endblock shop_section %}
+
+{% block main_content %}
+    <div id="result">
+
+    </div>
+
+{% endblock %}
