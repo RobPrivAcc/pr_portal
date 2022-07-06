@@ -14,10 +14,10 @@ class Time:
         return [self._year, self._last_year]
 
     def get_months(self, year: int = 0):
-        if not year:
-            year = self._year
-        if year != self._year:
-            self._months = [*range(1, 13, 1)]
+        # if not year:
+        #     year = self._year
+        # if year != self._year:
+        self._months = [*range(1, 13, 1)]
 
         months_list = []
         for month in self._months:

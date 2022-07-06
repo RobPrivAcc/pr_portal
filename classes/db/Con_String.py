@@ -41,5 +41,5 @@ class ConString:
                 shops_list.append([shop['postcode'], shop['shopName']])
             return shops_list
         else:
-            return [[self._con_string[shop_no]['postcode'],
-                    self._con_string[shop_no]['shopName']]]
+            return [[self._con_string[shop_no - 1]['postcode'],
+                    self._con_string[shop_no - 1]['shopName']]]

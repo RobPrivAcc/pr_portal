@@ -14,28 +14,28 @@
             <div class="btn-toolbar mb-2 mb-md-0">
                   <div class="input-group me-2">
 
-                        <select id = "shop" name = "shop" class="form-select form-select-outline-secondary">
+                        <select id = "shop" name = "shop" onchange="disable_submit()" class="form-select form-select-outline-secondary">
                           <option selected>Shop</option>
                             {% for shop in shops %}
                                 <option value="{{ shop[0] }}"> {{ shop[1]|title }} </option>
                             {% endfor %}
                         </select>
 
-                        <select id = "months" name = "months" class="form-select form-select-outline-secondary">
+                        <select id = "months" name = "months" onchange="disable_submit()" class="form-select form-select-outline-secondary">
                           <option selected>month</option>
                             {% for month in date.get_months() %}
                                 <option value="{{ month[0] }}">{{ month[1] }} </option>
                             {% endfor %}
                         </select>
 
-                        <select id = "years" name = "years" class="form-select form-select-outline-secondary">
+                        <select id = "years" name = "years" onchange="disable_submit()" class="form-select form-select-outline-secondary">
                             <option selected>years</option>
                             {% for year in date.get_years() %}
                                 <option value="{{ year }}">{{ year }} </option>
                             {% endfor %}
                         </select>
                   </div>
-                  <button type="submit" id="btn_book_in_raport" class="btn btn-sm btn-outline-secondary">
+                  <button type="submit" id="btn_book_in_raport" class="btn btn-sm btn-success" disabled>
                     Search
                   </button>
             </div>
@@ -49,3 +49,25 @@
     </div>
 
 {% endblock %}
+
+{% block js %}
+    <script>
+        function disable_submit(){
+            let shop = document.getElementById("shop");
+            shop = shop.options[shop.selectedIndex].text;
+
+            let months = document.getElementById("months");
+            months = months.options[months.selectedIndex].text;
+
+            let years = document.getElementById("years");
+            years = years.options[years.selectedIndex].text;
+
+            if (shop == 'Shop' || months == 'month' || years == 'years'){
+                document.getElementById('btn_book_in_raport').disabled = true;
+            }else{
+                document.getElementById('btn_book_in_raport').disabled = false;
+            }
+
+        }
+    </script>
+{% endblock js %}
