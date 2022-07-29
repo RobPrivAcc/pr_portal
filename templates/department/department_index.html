@@ -1,0 +1,123 @@
+{% extends "index.html" %}
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+    {% block site_title %}
+        {{ title }}
+    {% endblock site_title %}
+
+
+    {% block head %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/department/switchSlider.css')}}">
+    {% endblock head %}
+
+    {% block shop_section %}
+            <form  action = "/department/report"  method = "post">
+                <div class="btn-toolbar mb-2 mb-md-0">
+
+
+
+                <div class="input-group me-2">
+
+                        <select id = "shop" name = "shop" onchange="disable_submit()" class="form-select form-select-outline-secondary">
+                          <option selected>Shop</option>
+                            {% for shop in shops %}
+                                <option value="{{ shop[0] }}"> {{ shop[1]|title }} </option>
+                            {% endfor %}
+                                <option disabled>_________</option>
+                                <option>All shops</option>
+                        </select>
+                </div>
+
+                {% block year_switcher %}
+                    <input type="hidden" id="isFullYear" name="isFullYear" value="true"/>
+                {% endblock year_switcher %}
+
+                    <button type="submit" id="btn_department_raport" class="btn btn-sm btn-success" disabled>
+                        Search
+                    </button>
+               {% block date_section %}
+                   <div class="input-group m-1">
+                        <div id='divDateRangeId'>
+                            Full year
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" name = 'chbDateRangeId' id='chbDateRangeId' checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <div class="input-group mr-1">
+                        <div id='dateDiv' style='display: none;'>
+                            <div class='row'>
+                                <div class='col-xs-4 col-4 dateInputs'>
+                                    Date from: <input type="text" class="form-control form-control-sm" name="dateFrom" id="dateFrom" value="" />
+                                </div>
+
+                                <div class='col-xs-4 col-4 dateInputs'>
+                                    Date to: <input type="text" class="form-control form-control-sm" name="dateTo" id="dateTo" value="" />
+                                </div>
+
+                                <div class='col-xs-4 col-4'></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                {% endblock date_section %}
+                </div>
+            </form>
+    {% endblock shop_section %}
+
+{% block main_content %}
+    <div id="result">
+        {% block type_content %}
+        {% endblock type_content %}
+
+        {% block sub_type_content %}
+        {% endblock sub_type_content %}
+
+        {% block products_content %}
+        {% endblock products_content %}
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+
+            function disable_submit(){
+                let shop = document.getElementById("shop");
+                shop = shop.options[shop.selectedIndex].text;
+
+                if (shop == 'Shop'){
+                    document.getElementById('btn_department_raport').disabled = true;
+                }else{
+                    document.getElementById('btn_department_raport').disabled = false;
+                }
+            }
+
+            $(document).on("click", "#chbDateRangeId", function(){
+                disable_year_switcher()});
+
+            function disable_year_switcher(){
+                console.log($('#chbDateRangeId').prop('checked'));
+                if($('#chbDateRangeId').prop('checked') == true){
+                    $('#divDateRangeId').html('Full year');
+                    $('#isFullYear').val('true')
+                    $('#dateDiv').hide(500);
+                }else{
+                    $('#divDateRangeId').html('Date Range');
+                    $('#isFullYear').val('false')
+                    $('#dateDiv').show(500);
+                }}
+
+    </script>
+
+    {% block type_js %}
+    {% endblock type_js %}
+
+    {% block sub_js %}
+    {% endblock sub_js %}
+{% endblock js %}

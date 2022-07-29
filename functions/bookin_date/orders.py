@@ -12,7 +12,7 @@ def get_orders(shop_no: int, dates: list):
 	  ,[Supplier]
 	  ,[InvoiceRef]
       ,[GeneratedBy]
-      ,[TotalCost]
+      ,(select sum(Price * TotalCheckedQuantity) From RepSub Where OrderNo = SUBSTRING([Action], CHARINDEX('#', [Action]) + 1, len([Action]) - CHARINDEX('#', [Action]))) as 'TotalCost'
       ,[Expenses]
       ,SUBSTRING([Action], CHARINDEX('#', [Action]) + 1, len([Action]) - CHARINDEX('#', [Action])) as 'OrderNumber'
   FROM [ActionLog]

@@ -1,0 +1,11 @@
+{% extends "department/department_sub_type.html" %}
+        {% block products_content %}
+
+            <br/>
+            <h3>
+                <div id = "sub_type_id">
+                    {{ sub_type_name }}
+                </div>
+            </h3>
+            {{ products|safe }}
+        {% endblock products_content %}

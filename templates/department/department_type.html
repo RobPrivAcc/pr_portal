@@ -1,0 +1,106 @@
+{% extends "department/department_index.html" %}
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+    {% block site_title %}
+        {% if full_year == 'false' %}
+            {{ title }} ({{ dates[0] }} - {{ dates[1] }})
+        {% else %}
+            {{ title }}
+        {% endif %}
+
+    {% endblock site_title %}
+
+{% block date_section %}
+    {% if full_year == 'false' %}
+                    <div class="input-group m-1">
+                        <div id='divDateRangeId'>
+                            Full year
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" name = 'chbDateRangeId' id='chbDateRangeId'>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <div class="input-group mr-1">
+                        <div id='dateDiv' style='display: block;'>
+                            <div class='row'>
+                                <div class='col-xs-4 col-4 dateInputs'>
+                                    Date from: <input type="text" class="form-control form-control-sm" name="dateFrom" id="dateFrom" value="{{ dates[0] }}" />
+                                </div>
+
+                                <div class='col-xs-4 col-4 dateInputs'>
+                                    Date to: <input type="text" class="form-control form-control-sm" name="dateTo" id="dateTo" value="{{ dates[1] }}" />
+                                </div>
+
+                                <div class='col-xs-4 col-4'></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+    {% else %}
+        {{ super() }}
+    {% endif %}
+        {% endblock date_section %}
+
+        {% block year_switcher %}
+            {% if full_year == 'false' %}
+                <input type="hidden" id="isFullYear" name="isFullYear" value="false"/>
+            {% else %}
+                {{ super() }}
+            {% endif %}
+        {% endblock year_switcher %}
+
+    {% block type_content %}
+        {{ dates }}
+        {{ dates|length }}
+        <div id="type">
+          {{ type|safe }}
+        </div>
+    {% endblock type_content %}
+
+    {% block sub_type_content %}
+    {% endblock sub_type_content %}
+
+    {% block type_js %}
+        <script>
+            $(document).on("click", ".selectedCat", function(){
+
+                let type = $(this).find("td:first").text();
+                window.open("/department/report/" + type, "_self")
+            });
+
+            $(document).on("mouseover", ".selectedCatRow",function() {
+                $(this).addClass(' selectedCat');
+                $(this).css({"background-color": "#9bb8e8","cursor": "pointer"});
+            })
+           .on("mouseout", ".selectedCatRow",function() {
+                $(this).css({"background-color": "","cursor": "default"});
+                $(this).removeClass("pointer");
+                $(this).removeClass(' selectedCat');
+           });
+        </script>
+
+        <script>
+            $(document).on("click", ".selectedSubCat", function(){
+                let type_id = ($('#main_type_id').text()).trim();
+                let sub_type = ($(this).find("td:first").text()).trim();
+                window.open("/department/report/" + type_id +"/" + sub_type, "_self")
+            });
+
+            $(document).on("mouseover", ".selectedSubCatRow" ,function() {
+                $(this).addClass(' selectedSubCat');
+                $(this).css({"background-color": "#5ab451","cursor": "pointer"});
+            })
+           .on("mouseout", ".selectedSubCatRow",function() {
+                $(this).css({"background-color": "","cursor": "default"});
+                $(this).removeClass("pointer");
+                $(this).removeClass(' selectedSubCat');
+           });
+        </script>
+    {% endblock type_js %}

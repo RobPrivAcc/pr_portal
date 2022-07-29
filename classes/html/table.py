@@ -7,6 +7,11 @@ class Table:
         if isBootstrap:
             self._enable_bootstrap()
         self.filters = ''
+        self._row_class = ''
+
+    def enable_row_class(self, row_calsses_list: list):
+        for row_class in row_calsses_list:
+            self._row_class += row_class + " "
 
     def add_table_id(self, id: str):
         if id:
@@ -14,7 +19,7 @@ class Table:
 
     def enable_filters(self, function_name):
         filters = ""
-        for i in range(0,len(self.header)):
+        for i in range(0, len(self.header)):
             filters += f'''<th> <input class="form-control w-100 rounded-0 border-0" onkeyup="{function_name}({i})" type="text" placeholder="Search" id="searchBookIn_{i}" aria-label="Search"></th>'''
         self.filters = "<tr>" + filters + "</tr>"
 
@@ -28,6 +33,8 @@ class Table:
         head = ""
         for cell in self.header:
             head += '<th scope="col">' + cell + '</th>'
+        content = ''
+
         if self.filters:
             content = self.filters
         return '<thead class="thead-dark"><tr>' + head + '</tr>' + content + '</thead>'
@@ -35,10 +42,13 @@ class Table:
     def _get_content(self):
         content = ""
 
-
         for row in self.rows:
-            content += "<tr>"
+            if self._row_class:
+                content += "<tr class='" + self._row_class + "'>"
+            else:
+                content += "<tr>"
+
             for cell in row:
-                content += "<td>" + cell + "</td>"
+                content += "<td>" + str(cell) + "</td>"
             content += "</tr>"
         return content

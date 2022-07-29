@@ -19,6 +19,7 @@ class ConString:
         self.shop_number = len(self._con_string)
 
     def get_string(self, number: int = None):
+        number = int(number)
         if number:
             number = number - 1
             if number < self.shop_number:
